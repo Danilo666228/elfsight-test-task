@@ -2,8 +2,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Loader, Text } from '../common';
+import { API_URL } from '../../shared/constants';
 
-const API_EPISODES_URL = 'https://rickandmortyapi.com/api/episode';
 
 export function PopupEpisodes({ episodes }) {
   const [series, setSeries] = useState([]);
@@ -19,7 +19,7 @@ export function PopupEpisodes({ episodes }) {
     const episodesIds = episodes.map((ep) => ep.match(/\d+$/)[0]);
 
     axios
-      .get(`${API_EPISODES_URL}/${episodesIds.join(',')}`)
+      .get(`${API_URL}/episode/${episodesIds.join(',')}`)
       .then(({ data }) => {
         setSeries(data);
         setIsFetching(false);

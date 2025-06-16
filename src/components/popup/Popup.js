@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import { PopupEpisodes } from './PopupEpisodes';
 import { PopupHeader } from './PopupHeader';
@@ -27,10 +29,32 @@ export function Popup({ settings: { visible, content = {} }, setSettings }) {
     }));
   }
 
-  return (
-    <PopupContainer visible={visible}>
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setSettings((prev) => ({ ...prev, visible: false }));
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [setSettings]);
+
+  useEffect(() => {
+    if (visible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [visible]);
+
+  return createPortal(
+    <PopupContainer onClick={(event) => togglePopup(event)} visible={visible}>
       <StyledPopup>
-        <CloseIcon onClick={togglePopup} />
+        <CloseIcon onClick={(event) => togglePopup(event)} />
 
         <PopupHeader
           name={name}
@@ -45,22 +69,22 @@ export function Popup({ settings: { visible, content = {} }, setSettings }) {
 
         <PopupEpisodes episodes={episodes} />
       </StyledPopup>
-    </PopupContainer>
+    </PopupContainer>,
+    document.body
   );
 }
 
 const PopupContainer = styled.div`
   position: fixed;
-  z-index: 10;
   background: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100vh;
   color: #fff;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 50;
   opacity: 0;
   visibility: hidden;
-  pointer-events: none;
+  pointer-events: fill;
   transition: opacity 0.3s, visible 0.3s;
 
   ${({ visible }) =>
@@ -83,7 +107,7 @@ const StyledPopup = styled.div`
   border-radius: 15px;
   padding: 20px 40px;
   border: 2px solid #83bf46;
-  overflow: auto;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import { AppState, Header, ItemsGrid, Pagination, useData } from './components';
+import { Filters } from './components/filters';
 
 export function App() {
-  const { isFetching, isError } = useData();
+  const { isFetching, isError, filters, setFilters, characters } = useData();
 
   return (
     <Main>
       <Header />
 
+      <Filters filters={filters} setFilters={setFilters} />
       <AppState />
-
       {!isFetching && !isError && (
         <>
-          <ItemsGrid />
-
+          <ItemsGrid characters={characters} />
           <Pagination />
         </>
       )}

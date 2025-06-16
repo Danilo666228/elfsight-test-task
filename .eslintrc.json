@@ -2,8 +2,7 @@
   "extends": [
     "react-app",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "plugin:prettier/recommended"
+    "plugin:react/jsx-runtime"
   ],
   "rules": {
     "react/prop-types": "off",
@@ -16,7 +15,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "react/no-array-index-key": "warn",
-    "react/jsx-no-bind": ["warn", { "ignoreRefs": true }], 
+    "react/jsx-no-bind": ["warn", { "ignoreRefs": true, "allowArrowFunctions": true }],
     "padding-line-between-statements": [
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" },
