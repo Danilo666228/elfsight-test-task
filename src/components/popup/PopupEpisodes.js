@@ -1,13 +1,13 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import axios from 'axios';
 import { Loader, Text } from '../common';
 
 const API_EPISODES_URL = 'https://rickandmortyapi.com/api/episode';
 
 export function PopupEpisodes({ episodes }) {
   const [series, setSeries] = useState([]);
-  const [isFetching, setIsFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (!episodes?.length) {
@@ -21,11 +21,15 @@ export function PopupEpisodes({ episodes }) {
     axios
       .get(`${API_EPISODES_URL}/${episodesIds.join(',')}`)
       .then(({ data }) => {
-        if (episodes.length === 1) {
-          setSeries([data]);
-        } else {
-          setSeries(data);
-        }
+        setSeries(data);
+        setIsFetching(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setIsFetching(false);
+      })
+      .finally(() => {
+        setIsFetching(false);
       });
   }, [episodes]);
 
@@ -38,16 +42,17 @@ export function PopupEpisodes({ episodes }) {
       <Text>Participated in episodes:</Text>
 
       <StyledPopupEpisodes _length={series.length}>
-        {series?.map(({ id, name, episode }) => (
-          <Episode key={id} _length={series.length}>
-            <EpisodeMarking>
-              {episode
-                .replace(/S0?(\d+)/, 'Season $1 - ')
-                .replace(/E0?(\d+)/, 'Ep. $1')}
-            </EpisodeMarking>
-            {name}
-          </Episode>
-        ))}
+        {series.length > 0 &&
+          series?.map(({ id, name, episode }) => (
+            <Episode key={id} _length={series.length}>
+              <EpisodeMarking>
+                {episode
+                  .replace(/S0?(\d+)/, 'Season $1 - ')
+                  .replace(/E0?(\d+)/, 'Ep. $1')}
+              </EpisodeMarking>
+              {name}
+            </Episode>
+          ))}
       </StyledPopupEpisodes>
     </PopupEpisodesContainer>
   );

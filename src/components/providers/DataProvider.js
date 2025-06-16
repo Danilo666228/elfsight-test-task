@@ -11,25 +11,27 @@ export function DataProvider({ children }) {
   const [info, setInfo] = useState({});
   const [apiURL, setApiURL] = useState(API_URL);
 
-  const fetchData = async (url) => {
-    setIsFetching(true);
-    setIsError(false);
-
-    axios
-      .get(url)
-      .then(({ data }) => {
-        setIsFetching(false);
-        setCharacters(data.results);
-        setInfo(data.info);
-      })
-      .catch((e) => {
-        setIsFetching(false);
-        setIsError(true);
-        console.error(e);
-      });
-  };
-
   useEffect(() => {
+    const fetchData = async (url) => {
+      setIsFetching(true);
+      setIsError(false);
+
+      axios
+        .get(url)
+        .then(({ data }) => {
+          setIsFetching(false);
+          setCharacters(data.results);
+          setInfo(data.info);
+        })
+        .catch((e) => {
+          setIsFetching(false);
+          setIsError(true);
+          console.error(e);
+        })
+        .finally(() => {
+          setIsFetching(false);
+        });
+    };
     fetchData(apiURL);
   }, [apiURL]);
 
@@ -40,12 +42,11 @@ export function DataProvider({ children }) {
       apiURL,
       setApiURL,
       characters,
-      fetchData,
       isFetching,
       isError,
       info
     }),
-    [activePage, apiURL, characters, isFetching, isError, info, fetchData]
+    [activePage, apiURL, characters, isFetching, isError, info]
   );
 
   return (
