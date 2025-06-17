@@ -2,6 +2,7 @@
   "name": "elfsight-test-task",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://danilo666228.github.io/elfsight-test-task",
   "scripts": {
     "predeploy": "npm run build",
     "start": "react-app-rewired start",
@@ -15,7 +16,8 @@
     "react-dom": "^18.2.0",
     "react-select": "^5.4.0",
     "styled-components": "^5.3.5",
-    "tinycolor2": "^1.4.1"
+    "tinycolor2": "^1.4.1",
+    "gh-pages": "^6.3.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -32,8 +34,7 @@
     "eslint-plugin-react": "^7.32.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "2.2.0",
-    "react-app-rewired": "^2.2.1",
-    "gh-pages": "^6.3.0"
+    "react-app-rewired": "^2.2.1"
   },
   "browserslist": {
     "production": [
