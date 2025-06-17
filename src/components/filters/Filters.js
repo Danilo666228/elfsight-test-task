@@ -90,4 +90,5 @@ const StyledFilters = styled.div`
   grid-template-columns: 2fr 2fr 2fr;
   gap: 10px;
   width: 500px;
+  margin-inline: auto;
 `;

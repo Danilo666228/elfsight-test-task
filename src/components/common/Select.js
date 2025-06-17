@@ -10,9 +10,7 @@ export function Select({
   return (
     <StyledSelect className={className} onChange={onChange} {...props}>
       {placeholder && (
-        <StyledPlaceholder disabled value="">
-          {placeholder}
-        </StyledPlaceholder>
+        <StyledPlaceholder hidden>{placeholder}</StyledPlaceholder>
       )}
       {options.map((option) => (
         <StyledOption key={option.value} value={option.value}>
@@ -38,7 +36,9 @@ const StyledSelect = styled.select`
   border-radius: 5px;
 `;
 const StyledOption = styled.option`
-  background-color: #263750;
+  appearance: none;
+  position: relative;
+  background-color: #e6f2da;
   color: white;
-  padding: 10px 20px;
+  color: black;
 `;
