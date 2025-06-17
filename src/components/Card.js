@@ -30,10 +30,7 @@ export function CardTitle({ name, gender, className }) {
   return (
     <CardTitleContainer className={className}>
       <StyledCardTitle className="card-title">{name}</StyledCardTitle>
-
-      <IconContainer>
-        <GenderIcon gender={gender} />
-      </IconContainer>
+      <GenderIcon gender={gender} />
     </CardTitleContainer>
   );
 }

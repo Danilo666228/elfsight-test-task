@@ -11,10 +11,10 @@ const defaultPopupSettings = {
 export function ItemsGrid({ characters }) {
   const [popupSettings, setPopupSettings] = useState(defaultPopupSettings);
 
-  function cardOnClickHandler(props) {
+  function cardOnClickHandler(item) {
     setPopupSettings({
       visible: true,
-      content: { ...props }
+      content: { ...item }
     });
   }
 
